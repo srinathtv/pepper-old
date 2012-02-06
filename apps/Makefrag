@@ -1,0 +1,41 @@
+#
+# Makefile fragment for common code.
+# This is NOT a complete makefile;
+# you must run GNU make in the top-level directory
+# where the GNUmakefile is located.
+#
+
+SRCDIR = apps
+OBJDIRS += $(SRCDIR)
+
+# Add computations here. Must name verifier <computation>_v and prover
+# <computation>_p.
+COMPUTATION_APPS =      \
+        polyeval_d2     \
+        polyeval_d3     \
+        matrix_cubicp
+
+# General apps without automatic verifier/prover.
+GENERAL_APPS = micro
+
+# Add SRCDIR
+APPS_V_SRCFILES = $(addprefix $(SRCDIR), $(COMPUTATION_APPS))
+APPS_P_SRCFILES = $(addprefix  $(SRCDIR), $(COMPUTATION_APPS))
+APPS_GENERAL_SRCFILES = $(addprefix $(SRCDIR), $(GENERAL_APPS))
+
+APPS_SRCFILES =                                                  \
+	$(patsubst %, $(SRCDIR)/%_v.cpp, $(COMPUTATION_APPS))    \
+	$(patsubst %, $(SRCDIR)/%_p.cpp, $(COMPUTATION_APPS))    \
+	$(patsubst %, $(SRCDIR)/%.cpp, $(GENERAL_APPS))          \
+
+# Only build files if they exist.
+APPS_SRCFILES := $(wildcard $(APPS_SRCFILES))
+
+APPS_OBJFILES = $(patsubst %.cpp, $(OBJDIR)/%.o, $(APPS_SRCFILES))
+
+# How to build common object files
+$(OBJDIR)/$(SRCDIR)/%.o: $(SRCDIR)/%.cpp
+	@echo + cpp $<
+	@mkdir -p $(@D)
+	$(V)$(CPP) $(CFLAGS) $(LDFLAGS) $(IFLAGS) -c -o $@ $<
+

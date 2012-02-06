@@ -1,0 +1,23 @@
+#
+# Makefile fragment for common code.
+# This is NOT a complete makefile;
+# you must run GNU make in the top-level directory
+# where the GNUmakefile is located.
+#
+
+OBJDIRS += crypto 
+SRCDIR = . 
+
+CRYPTO_SRCFILES :=	crypto/crypto.cpp 
+
+# Only build files if they exist.
+CRYPTO_SRCFILES := $(wildcard $(CRYPTO_SRCFILES))
+
+CRYPTO_OBJFILES := $(patsubst %.cpp, $(OBJDIR)/%.o, $(CRYPTO_SRCFILES))
+
+# How to build common object files
+$(OBJDIR)/crypto/%.o: crypto/%.cpp
+	@echo + cpp $<
+	@mkdir -p $(@D)
+	$(V)$(CPP) $(CFLAGS) $(LDFLAGS) $(IFLAGS) -c -o $@ $<
+

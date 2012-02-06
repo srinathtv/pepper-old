@@ -1,0 +1,16 @@
+Here we list the experimental configurations that we used to generate
+results in our NDSS 2012 paper (Making argument systems for outsourced
+computation practical (sometimes)).
+
+1. For Figure 5, we run pepper with the following parameters for each
+model computation:
+  (a) #instances = 1 that can be passed using -b=1
+  (b) input size = 100 by using -i=100
+  (c) #repetitions by using -r=[1|70]
+  (d) varying key sizes: 512, 704, and 1024 (that can be set in crypto/crypto.h)
+
+2. For Figure 6, we pre-installed the commitment query on the prover and
+run Habanero with the following parameters and model computations.
+  (a) Matrix multiplication with -i=200, -b=100
+  (b) Poly d2 with -i=500, -b=200
+  (c) Poly d3 with -i=200, -b=350

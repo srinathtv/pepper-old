@@ -1,0 +1,50 @@
+Pepper's source code is released under a BSD-style license. See LICENSE
+for more details.
+
+PREREQUISITES:
+Pepper's code requires the following packages to be installed. 
+
+  - GMP
+  - FCGI
+  - Apache2 with PHP module and FastCGI module
+  - PAPI
+  - libcurl
+  - Chacha pseudorandom number generator
+  - sfslite
+  - libconfig
+
+CONFIGURATION and SETUP:
+  
+  - Build pepper's code by running make
+
+  Here we describe setup instructions to run pepper using two machines:
+  one for the verifier and another one for the prover.
+  
+  On the prover machine do the following:
+  
+  - After installing apache2 from source or a package, run apache2 with
+    the config file present in www/apache.conf. 
+
+  - Update PHP's ini file to allow file uploads and increase the default
+    POST limit.
+
+  - Copy the prover's executables and the php files under "www" folder
+    to the apache's root directory.
+
+  - Create a folder /mnt/computation_state and change the folder
+    permissions so that the PHP scripts and the executables can read and
+    write data to that folder
+
+  On the verifier machine, do the following:
+  
+  - Create a folder /mnt/computation_state
+
+
+To outsource and verify a computation (e.g. matrix multiplication), run 
+./bin/matrix_cubicp_v -b [# instances] -r [#repetitions] -i [input size]
+-v [0 for pepper and 1 for Habanero] -o 0 -s [prover's name e.g.
+http://server/]
+
+CONTACT:
+Please contact us at srinath at cs dot utexas edu for updates and bug
+fixes. 
